@@ -22,8 +22,8 @@ async def post_to_all(message: str, platforms: list[Platform]) -> list[PlatformR
 async def _post_one(client: httpx.AsyncClient, platform: Platform, message: str) -> PlatformResult:
     try:
         url = await platform.post(client, message)
-        public = await platform.check_public(client, url)
         now = datetime.now(UTC)
+        public = await platform.check_public(client, url)
         logger.info("%s: posted %s (public=%s)", platform.name, url, public)
         return PlatformResult(
             platform=platform.name,
