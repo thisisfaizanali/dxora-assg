@@ -1,0 +1,9 @@
+{
+  "success": false,
+  "errors": [
+    {
+      "field": "message",
+      "message": "Message must contain exactly one CTA link (found 0)."
+    }
+  ]
+}

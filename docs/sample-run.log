@@ -1,0 +1,21 @@
+INFO:     Started server process [1464]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:4000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57746 - "GET /docs HTTP/1.1" 200 OK
+2026-11-17 00:40:42,620 WARNING app.posting: Telegraph: failed: Network error: ConnectError
+2026-11-17 00:40:43,019 INFO httpx: HTTP Request: POST https://rentry.co/api/new "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,039 INFO httpx: HTTP Request: POST https://ntfy.sh/dxora-automated-posting-demo "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,057 INFO httpx: HTTP Request: POST https://dpaste.org/api/ "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,242 INFO httpx: HTTP Request: GET https://rentry.co/r4oqs58i "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,244 INFO app.posting: Rentry: posted https://rentry.co/r4oqs58i (public=True)
+2026-11-17 00:40:43,256 INFO httpx: HTTP Request: GET https://ntfy.sh/dxora-automated-posting-demo/json?poll=1 "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,323 INFO httpx: HTTP Request: GET https://dpaste.org/62hKF "HTTP/1.1 200 OK"
+2026-11-17 00:40:43,339 INFO app.posting: dpaste: posted https://dpaste.org/62hKF (public=True)
+2026-11-17 00:40:43,527 INFO httpx: HTTP Request: POST https://paste.rs/ "HTTP/1.1 201 Created"
+2026-11-17 00:40:44,553 INFO httpx: HTTP Request: GET https://ntfy.sh/dxora-automated-posting-demo/json?poll=1 "HTTP/1.1 200 OK"
+2026-11-17 00:40:44,553 INFO app.posting: ntfy: posted https://ntfy.sh/dxora-automated-posting-demo (public=True)
+2026-11-17 00:40:44,671 INFO httpx: HTTP Request: GET https://paste.rs/jkGTS "HTTP/1.1 200 OK"
+2026-11-17 00:40:44,673 INFO app.posting: paste.rs: posted https://paste.rs/jkGTS (public=True)
+INFO:     127.0.0.1:57751 - "POST /posting HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57762 - "POST /posting HTTP/1.1" 422 Unprocessable Entity
