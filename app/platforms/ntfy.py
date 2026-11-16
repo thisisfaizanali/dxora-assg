@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 import httpx
@@ -30,6 +31,15 @@ class Ntfy(Platform):
         return f"https://ntfy.sh/{topic}"
 
     async def check_public(self, client: httpx.AsyncClient, url: str) -> bool:
+        # ntfy.sh writes to its cache slightly after replying, so the first poll can miss the message
+        for attempt in range(3):
+            if attempt:
+                await asyncio.sleep(1)
+            if await self._is_stored(client, url):
+                return True
+        return False
+
+    async def _is_stored(self, client: httpx.AsyncClient, url: str) -> bool:
         try:
             response = await client.get(f"{url}/json?poll=1")
         except httpx.HTTPError:

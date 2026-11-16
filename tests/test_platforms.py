@@ -16,6 +16,10 @@ LINK = "https://example.com"
 MESSAGE = f"Check out our platform. {LINK} Grow today."
 
 
+async def instant_sleep(_seconds):
+    return None
+
+
 def run(platform, handler, method="post"):
     async def go():
         async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
@@ -87,6 +91,7 @@ def test_paste_rs_truncated():
 
 def test_ntfy_success_and_public_check(monkeypatch):
     monkeypatch.setattr("app.platforms.ntfy.settings.ntfy_topic", "demo-topic")
+    monkeypatch.setattr("app.platforms.ntfy.asyncio.sleep", instant_sleep)
     ntfy = Ntfy()
 
     def post_handler(request):
@@ -105,6 +110,20 @@ def test_ntfy_success_and_public_check(monkeypatch):
 
     assert asyncio.run(check('{"id":"other"}\n{"id":"m1"}\n')) is True
     assert asyncio.run(check('{"id":"other"}\n')) is False
+
+
+def test_ntfy_public_check_retries_until_cached(monkeypatch):
+    monkeypatch.setattr("app.platforms.ntfy.asyncio.sleep", instant_sleep)
+    ntfy = Ntfy()
+    ntfy._last_id = "m1"
+    bodies = iter(["", '{"id":"m1"}\n'])
+
+    async def check():
+        handler = lambda request: httpx.Response(200, text=next(bodies))
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            return await ntfy.check_public(client, "https://ntfy.sh/demo-topic")
+
+    assert asyncio.run(check()) is True
 
 
 def test_rentry_success():
