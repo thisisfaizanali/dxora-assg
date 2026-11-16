@@ -95,6 +95,7 @@ Invoke-RestMethod -Uri http://localhost:4000/posting -Method Post -ContentType "
 
 Real output from a live run on 2026-11-16; date and time are UTC.
 In this run Telegraph failed with a network error (the connection from the host to telegra.ph could not be established), while the other four platforms succeeded. This shows that one failing platform does not affect the rest.
+An earlier live run the same day succeeded on all five platforms, including Telegraph: https://telegra.ph/Automated-multi-platform-posting-demo-built-with-FastAPI-So-11-16
 
 Files: [request](docs/sample-request.json), [response](docs/sample-response.json).
 
@@ -255,6 +256,7 @@ pytest -q
 
 - Public paste services have rate limits and can be down.
 - ntfy messages expire after about 12 hours.
+- telegra.ph is blocked or unreachable on some networks, so Telegraph can fail with a connection error depending on where the server runs.
 - A new anonymous Telegraph account is created on every run unless `TELEGRAPH_ACCESS_TOKEN` is set.
 - The endpoint has no auth or rate limiting; it is intended for local use.
 - The ntfy public check keeps the last message id on the platform instance, which is fine for one request at a time.
